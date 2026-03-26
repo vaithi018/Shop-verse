@@ -5,6 +5,13 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
+import Script from 'next/script';
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart } = useCart();
@@ -17,9 +24,6 @@ export default function CheckoutPage() {
     address: '',
     city: '',
     zip: '',
-    cardNumber: '',
-    expiry: '',
-    cvv: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -31,11 +35,34 @@ export default function CheckoutPage() {
     if (!form.address.trim()) newErrors.address = 'Address is required';
     if (!form.city.trim()) newErrors.city = 'City is required';
     if (!form.zip.trim()) newErrors.zip = 'ZIP code is required';
-    if (!form.cardNumber.trim()) newErrors.cardNumber = 'Card number is required';
-    if (!form.expiry.trim()) newErrors.expiry = 'Expiry is required';
-    if (!form.cvv.trim()) newErrors.cvv = 'CVV is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const handlePaymentSuccess = async (response: any) => {
+    try {
+      setLoading(true);
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userEmail: form.email,
+          items: cart,
+          total: cartTotal * 1.08,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_signature: response.razorpay_signature,
+        }),
+      });
+      if (!res.ok) throw new Error('Order verification failed');
+      const order = await res.json();
+      clearCart();
+      router.push(`/orders?id=${order.id}`);
+    } catch {
+      alert('Failed to verify order. Please contact support.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,22 +70,45 @@ export default function CheckoutPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/orders', {
+      const amount = cartTotal * 1.08;
+      
+      const rzpRes = await fetch('/api/razorpay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: cart,
-          total: cartTotal * 1.08,
-          customer: { name: form.name, email: form.email, address: `${form.address}, ${form.city} ${form.zip}` },
-        }),
+        body: JSON.stringify({ amount }),
       });
-      if (!res.ok) throw new Error('Order failed');
-      const order = await res.json();
-      clearCart();
-      router.push(`/orders?id=${order.id}`);
+      
+      if (!rzpRes.ok) throw new Error('Order creation failed');
+      const order = await rzpRes.json();
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || '', // Enter the Key ID generated from the Dashboard
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Ecommerce Store',
+        description: 'Test Transaction',
+        order_id: order.id,
+        handler: function (response: any) {
+          handlePaymentSuccess(response);
+        },
+        prefill: {
+          name: form.name,
+          email: form.email,
+        },
+        theme: {
+          color: '#7c3aed', // violet-600
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.on('payment.failed', function (response: any) {
+        alert('Payment failed. Please try again.');
+        setLoading(false);
+      });
+      
+      paymentObject.open();
     } catch {
-      alert('Failed to place order. Please try again.');
-    } finally {
+      alert('Failed to initialize payment gateway.');
       setLoading(false);
     }
   };
@@ -84,11 +134,12 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+      <Script id="razorpay-checkout-js" src="https://checkout.razorpay.com/v1/checkout.js" />
+      
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Checkout</h1>
       <form onSubmit={handleSubmit}>
         <div className="grid lg:grid-cols-5 gap-8">
           <div className="lg:col-span-3 space-y-6">
-            {/* Shipping Info */}
             <div className="p-6 rounded-2xl bg-white dark:bg-gray-800/50 border border-gray-200/50 dark:border-gray-700/50">
               <h2 className="text-lg font-bold mb-4">Shipping Information</h2>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -119,30 +170,8 @@ export default function CheckoutPage() {
                 </div>
               </div>
             </div>
-            {/* Payment */}
-            <div className="p-6 rounded-2xl bg-white dark:bg-gray-800/50 border border-gray-200/50 dark:border-gray-700/50">
-              <h2 className="text-lg font-bold mb-4">Payment Details</h2>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium mb-1.5">Card Number</label>
-                  <input name="cardNumber" value={form.cardNumber} onChange={handleChange} className={inputClass('cardNumber')} placeholder="4242 4242 4242 4242" />
-                  {errors.cardNumber && <p className="text-red-500 text-xs mt-1">{errors.cardNumber}</p>}
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1.5">Expiry</label>
-                  <input name="expiry" value={form.expiry} onChange={handleChange} className={inputClass('expiry')} placeholder="MM/YY" />
-                  {errors.expiry && <p className="text-red-500 text-xs mt-1">{errors.expiry}</p>}
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1.5">CVV</label>
-                  <input name="cvv" value={form.cvv} onChange={handleChange} className={inputClass('cvv')} placeholder="123" />
-                  {errors.cvv && <p className="text-red-500 text-xs mt-1">{errors.cvv}</p>}
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Summary */}
           <div className="lg:col-span-2">
             <div className="sticky top-24 p-6 rounded-2xl bg-white dark:bg-gray-800/50 border border-gray-200/50 dark:border-gray-700/50">
               <h2 className="text-lg font-bold mb-4">Order Summary</h2>
@@ -166,7 +195,7 @@ export default function CheckoutPage() {
                 <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">${(cartTotal * 1.08).toFixed(2)}</span>
               </div>
               <button type="submit" disabled={loading} className="mt-6 w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold shadow-xl transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
-                {loading ? 'Processing...' : 'Place Order'}
+                {loading ? 'Processing...' : 'Pay with Razorpay'}
               </button>
             </div>
           </div>

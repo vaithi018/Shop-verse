@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import crypto from 'crypto';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -26,7 +27,19 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { userEmail, items, total } = body;
+    const { userEmail, items, total, razorpay_payment_id, razorpay_order_id, razorpay_signature } = body;
+
+    if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
+      return NextResponse.json({ error: 'Missing payment details' }, { status: 400 });
+    }
+
+    const shasum = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET as string);
+    shasum.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+    const digest = shasum.digest('hex');
+
+    if (digest !== razorpay_signature) {
+      return NextResponse.json({ error: 'Invalid payment signature' }, { status: 400 });
+    }
 
     // Insert new order into Supabase
     const { data: newOrder, error } = await supabase
@@ -36,7 +49,7 @@ export async function POST(request: NextRequest) {
           user_email: userEmail,
           items: items, // JSONB field in Supabase
           total: parseFloat(total),
-          status: 'pending'
+          status: 'paid'
         }
       ])
       .select()
