@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Wireless Noise-Cancelling Headphones",
+    "price": 299.99,
+    "description": "Premium wireless headphones with active noise cancellation, 30-hour battery life, and ultra-comfortable memory foam ear cushions. Experience studio-quality sound anywhere you go.",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",
+    "category": "Electronics",
+    "rating": 4.8,
+    "stock": 25
+  },
+  {
+    "id": 2,
+    "name": "Premium Leather Backpack",
+    "price": 189.99,
+    "description": "Hand-crafted genuine leather backpack with padded laptop compartment, multiple organizational pockets, and water-resistant finish. Perfect for work and travel.",
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&q=80",
+    "category": "Fashion",
+    "rating": 4.6,
+    "stock": 15
+  },
+  {
+    "id": 3,
+    "name": "Smart Fitness Watch Pro",
+    "price": 349.99,
+    "description": "Advanced fitness tracker with GPS, heart rate monitor, sleep tracking, and 50+ workout modes. Water-resistant to 50m with a stunning AMOLED display.",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80",
+    "category": "Electronics",
+    "rating": 4.7,
+    "stock": 30
+  },
+  {
+    "id": 4,
+    "name": "Minimalist Desk Lamp",
+    "price": 79.99,
+    "description": "Sleek, modern desk lamp with adjustable color temperature, brightness control, and USB charging port. Touch-sensitive controls with memory function.",
+    "image": "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=500&q=80",
+    "category": "Home",
+    "rating": 4.5,
+    "stock": 40
+  },
+  {
+    "id": 5,
+    "name": "Organic Coffee Bean Collection",
+    "price": 45.99,
+    "description": "Premium collection of three single-origin organic coffee beans from Ethiopia, Colombia, and Guatemala. Medium to dark roast, freshly roasted to order.",
+    "image": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&q=80",
+    "category": "Food",
+    "rating": 4.9,
+    "stock": 50
+  },
+  {
+    "id": 6,
+    "name": "Ultra-Slim Laptop Stand",
+    "price": 59.99,
+    "description": "Ergonomic aluminum laptop stand with adjustable height and angle. Foldable design for portability. Compatible with all laptops up to 17 inches.",
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&q=80",
+    "category": "Electronics",
+    "rating": 4.4,
+    "stock": 35
+  },
+  {
+    "id": 7,
+    "name": "Handmade Ceramic Mug Set",
+    "price": 34.99,
+    "description": "Set of 4 artisan-crafted ceramic mugs in earth-tone glazes. Microwave and dishwasher safe. Each mug holds 12oz of your favorite beverage.",
+    "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&q=80",
+    "category": "Home",
+    "rating": 4.6,
+    "stock": 20
+  },
+  {
+    "id": 8,
+    "name": "Premium Yoga Mat",
+    "price": 68.99,
+    "description": "Extra-thick 6mm yoga mat made from natural tree rubber with alignment markings. Non-slip surface on both sides for maximum grip and stability.",
+    "image": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500&q=80",
+    "category": "Sports",
+    "rating": 4.7,
+    "stock": 45
+  },
+  {
+    "id": 9,
+    "name": "Vintage Sunglasses Collection",
+    "price": 129.99,
+    "description": "Retro-inspired polarized sunglasses with UV400 protection. Acetate frames in classic tortoiseshell pattern. Includes premium leather case.",
+    "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80",
+    "category": "Fashion",
+    "rating": 4.3,
+    "stock": 28
+  },
+  {
+    "id": 10,
+    "name": "Bluetooth Portable Speaker",
+    "price": 149.99,
+    "description": "Compact waterproof Bluetooth speaker with 360° sound, 20-hour battery, and built-in microphone. Perfect for outdoor adventures.",
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&q=80",
+    "category": "Electronics",
+    "rating": 4.5,
+    "stock": 32
+  },
+  {
+    "id": 11,
+    "name": "Scented Soy Candle Set",
+    "price": 42.99,
+    "description": "Set of 3 hand-poured soy candles in lavender, vanilla, and eucalyptus scents. 40-hour burn time each. Made with natural essential oils.",
+    "image": "https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80",
+    "category": "Home",
+    "rating": 4.8,
+    "stock": 55
+  },
+  {
+    "id": 12,
+    "name": "Running Shoes Pro Max",
+    "price": 179.99,
+    "description": "Lightweight performance running shoes with responsive foam cushioning, breathable mesh upper, and durable rubber outsole. Available in multiple colors.",
+    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80",
+    "category": "Sports",
+    "rating": 4.6,
+    "stock": 22
+  }
+]
