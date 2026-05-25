@@ -21,8 +21,8 @@ export default function HomePage() {
       .catch(() => setLoading(false));
   }, []);
 
-  const featuredProducts = products.slice(0, 4);
-  const categories = [...new Set(products.map((p) => p.category))];
+  const featuredProducts = Array.isArray(products) ? products.slice(0, 4) : [];
+  const categories = Array.isArray(products) ? [...new Set(products.map((p) => p.category))] : [];
 
   return (
     <div className="min-h-screen">

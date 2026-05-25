@@ -36,7 +36,7 @@ export default function ProductsContent() {
         const res = await fetch(`/api/products?${params}`);
         if (!res.ok) throw new Error('Failed to fetch products');
         const data = await res.json();
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Something went wrong');
       } finally {

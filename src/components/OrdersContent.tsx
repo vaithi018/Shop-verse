@@ -14,7 +14,10 @@ export default function OrdersContent() {
   }>>([]);
 
   useEffect(() => {
-    fetch('/api/orders').then(r => r.json()).then(setOrders).catch(() => {});
+    fetch('/api/orders')
+      .then(r => r.json())
+      .then(data => setOrders(Array.isArray(data) ? data : []))
+      .catch(() => setOrders([]));
   }, []);
 
   const currentOrder = orderId ? orders.find(o => o.id === orderId) : null;
