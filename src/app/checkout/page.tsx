@@ -179,20 +179,20 @@ export default function CheckoutPage() {
                 {cart.map((item) => (
                   <div key={item.product.id} className="flex justify-between text-sm">
                     <span className="text-gray-600 dark:text-gray-400 truncate mr-2">{item.product.name} ×{item.quantity}</span>
-                    <span className="font-medium whitespace-nowrap">${(item.product.price * item.quantity).toFixed(2)}</span>
+                    <span className="font-medium whitespace-nowrap">₹{(item.product.price * item.quantity).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                 ))}
               </div>
               <hr className="border-gray-200 dark:border-gray-700 my-3" />
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span>Subtotal</span><span>${cartTotal.toFixed(2)}</span></div>
+                <div className="flex justify-between"><span>Subtotal</span><span>₹{cartTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
                 <div className="flex justify-between"><span>Shipping</span><span className="text-emerald-500">Free</span></div>
-                <div className="flex justify-between"><span>Tax (8%)</span><span>${(cartTotal * 0.08).toFixed(2)}</span></div>
+                <div className="flex justify-between"><span>Tax (8%)</span><span>₹{(cartTotal * 0.08).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
               </div>
               <hr className="border-gray-200 dark:border-gray-700 my-3" />
               <div className="flex justify-between text-lg font-bold">
                 <span>Total</span>
-                <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">${(cartTotal * 1.08).toFixed(2)}</span>
+                <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">₹{(cartTotal * 1.08).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <button type="submit" disabled={loading} className="mt-6 w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold shadow-xl transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
                 {loading ? 'Processing...' : 'Pay with Razorpay'}

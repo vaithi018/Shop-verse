@@ -148,7 +148,7 @@ export default function AdminPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 hidden sm:table-cell"><span className="px-2 py-1 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 text-xs font-medium">{p.category}</span></td>
-                    <td className="px-6 py-4 font-semibold">${p.price.toFixed(2)}</td>
+                    <td className="px-6 py-4 font-semibold">₹{p.price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td className="px-6 py-4 hidden md:table-cell">{p.stock}</td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">

@@ -37,7 +37,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">Support</h4>
             <ul className="space-y-2">
               <li><span className="text-sm text-gray-500 dark:text-gray-400">help@shopverse.com</span></li>
-              <li><span className="text-sm text-gray-500 dark:text-gray-400">+1 (555) 123-4567</span></li>
+              <li><span className="text-sm text-gray-500 dark:text-gray-400">+91 82704 28389</span></li>
               <li><span className="text-sm text-gray-500 dark:text-gray-400">Mon-Fri 9AM-6PM</span></li>
             </ul>
           </div>

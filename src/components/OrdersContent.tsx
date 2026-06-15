@@ -41,10 +41,10 @@ export default function OrdersContent() {
           <hr className="border-gray-200 dark:border-gray-700" />
           <h3 className="font-semibold">Items</h3>
           {currentOrder.items.map((item, i) => (
-            <div key={i} className="flex justify-between text-sm"><span>{item.product.name} ×{item.quantity}</span><span>${(item.product.price * item.quantity).toFixed(2)}</span></div>
+            <div key={i} className="flex justify-between text-sm"><span>{item.product.name} ×{item.quantity}</span><span>₹{(item.product.price * item.quantity).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
           ))}
           <hr className="border-gray-200 dark:border-gray-700" />
-          <div className="flex justify-between text-lg font-bold"><span>Total</span><span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">${currentOrder.total.toFixed(2)}</span></div>
+          <div className="flex justify-between text-lg font-bold"><span>Total</span><span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">₹{currentOrder.total.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
           <hr className="border-gray-200 dark:border-gray-700" />
           <h3 className="font-semibold">Shipping To</h3>
           <p className="text-sm text-gray-500">{currentOrder.customer.name}<br/>{currentOrder.customer.email}<br/>{currentOrder.customer.address}</p>
@@ -77,7 +77,7 @@ export default function OrdersContent() {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-semibold capitalize">{order.status}</span>
-                  <span className="text-lg font-bold">${order.total.toFixed(2)}</span>
+                  <span className="text-lg font-bold">₹{order.total.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
               </div>
             </Link>

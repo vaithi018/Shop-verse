@@ -111,7 +111,7 @@ export default function ProductDetailPage() {
           {/* Price */}
           <div className="flex items-baseline gap-3">
             <span className="text-4xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
-              ${product.price.toFixed(2)}
+              ₹{product.price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
 

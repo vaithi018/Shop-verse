@@ -51,7 +51,7 @@ export default function CartPage() {
                     <button onClick={() => updateQuantity(item.product.id, item.quantity + 1)} className="px-3 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">+</button>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-lg font-bold">${(item.product.price * item.quantity).toFixed(2)}</span>
+                    <span className="text-lg font-bold">₹{(item.product.price * item.quantity).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     <button onClick={() => removeFromCart(item.product.id)} className="p-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     </button>
@@ -65,11 +65,11 @@ export default function CartPage() {
           <div className="sticky top-24 p-6 rounded-2xl bg-white dark:bg-gray-800/50 border border-gray-200/50 dark:border-gray-700/50">
             <h2 className="text-lg font-bold mb-6">Order Summary</h2>
             <div className="space-y-3 text-sm">
-              <div className="flex justify-between text-gray-600 dark:text-gray-400"><span>Subtotal</span><span>${cartTotal.toFixed(2)}</span></div>
+              <div className="flex justify-between text-gray-600 dark:text-gray-400"><span>Subtotal</span><span>₹{cartTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
               <div className="flex justify-between text-gray-600 dark:text-gray-400"><span>Shipping</span><span className="text-emerald-500 font-medium">Free</span></div>
-              <div className="flex justify-between text-gray-600 dark:text-gray-400"><span>Tax (8%)</span><span>${(cartTotal * 0.08).toFixed(2)}</span></div>
+              <div className="flex justify-between text-gray-600 dark:text-gray-400"><span>Tax (8%)</span><span>₹{(cartTotal * 0.08).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
               <hr className="border-gray-200 dark:border-gray-700" />
-              <div className="flex justify-between text-lg font-bold"><span>Total</span><span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">${(cartTotal * 1.08).toFixed(2)}</span></div>
+              <div className="flex justify-between text-lg font-bold"><span>Total</span><span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">₹{(cartTotal * 1.08).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
             </div>
             <Link href="/checkout" className="block mt-6 w-full text-center px-6 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold shadow-xl transition-all duration-300 hover:scale-[1.02]">
               Proceed to Checkout
